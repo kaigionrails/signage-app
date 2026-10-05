@@ -150,12 +150,15 @@ const AnnounceUpcomingTopic: React.FC<{ session: ConferenceSession }> = ({
       {/* TODO: missing room name */}
 
       <HStack alignItems="center" spacing="0.7vw" textAlign="left">
-        <Box minW="11.5vw" textAlign="right">
+        <Box minW="14.5vw" textAlign="right">
           <Text fontWeight="500" fontSize="1.8vw" lineHeight="2.3vw">
             {session.hall}
           </Text>
           <Text fontWeight="500" fontSize="1.2vw" lineHeight="1.8vw">
-            #rubykaigi{session.track.toUpperCase()}
+            #kaigionrails
+          </Text>
+          <Text fontWeight="500" fontSize="1.2vw" lineHeight="1.8vw">
+            #kaigionrails_{session.track}
           </Text>
         </Box>
         <Box minW="7vw" w="7vw" mx="1vw">
