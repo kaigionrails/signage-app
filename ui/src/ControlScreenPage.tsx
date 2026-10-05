@@ -96,10 +96,6 @@ const ScreenControlView: React.FC<{ screen: ScreenControl | undefined }> = ({
       </Flex>
 
       <Text>Mode: {mode}</Text>
-      <Text>
-        Caption: main={screen.main_caption ?? "refiner"}, sub=
-        {screen.subscreen_caption ?? "off"}
-      </Text>
 
       {screen.intermission ? (
         <Text>

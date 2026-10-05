@@ -45,9 +45,7 @@ indexhtml = File.read(File.join(srcdir,'index.html'))
   screen
   subscreen
   hallway
-  caption
   control/announcements
-  control/caption
   control/screens
   control/timers
   control/kiosks

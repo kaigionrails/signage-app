@@ -32,8 +32,6 @@ import {
 import ControlLightningTimerPage from "./ControlLightningTimerPage";
 import SubScreenPage from "./SubScreenPage";
 import { ControlKiosksPage } from "./ControlKiosksPage";
-import ControlCaptionPage from "./ControlCaptionPage";
-import MainCaptionPage from "./MainCaptionPage";
 
 const ControlLayout: React.FC = () => {
   const toast = useToast();
@@ -93,7 +91,6 @@ export const App: React.FC = () => {
               <Route element={<KioskLayout />}>
                 <Route path="screen" element={<ScreenPage />} />
                 <Route path="/subscreen" element={<SubScreenPage />} />
-                <Route path="/caption" element={<MainCaptionPage />} />
               </Route>
               <Route
                 element={
@@ -111,7 +108,6 @@ export const App: React.FC = () => {
                 <Route path="screens" element={<ControlScreenPage />} />
                 <Route path="timers" element={<ControlLightningTimerPage />} />
                 <Route path="kiosks" element={<ControlKiosksPage />} />
-                <Route path="caption" element={<ControlCaptionPage />} />
               </Route>
               {/* 
 

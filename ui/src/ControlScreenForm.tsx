@@ -246,25 +246,6 @@ export const ControlScreenForm: React.FC<{
               </Select>
             </FormControl>
             <FormControl>
-              <FormLabel>Subscreen Caption</FormLabel>
-              <Select {...register("subscreen_caption")}>
-                <option value="off">Off</option>
-                <option value="refiner">Refiner</option>
-                <option value="transcribe">Transcribe</option>
-              </Select>
-            </FormControl>
-            <FormControl>
-              <FormLabel>Subscreen Caption hides partial result</FormLabel>
-              <Checkbox {...register("subscreen_caption_hide_partial")} />
-            </FormControl>
-            <FormControl>
-              <FormLabel>Mainscreen Caption</FormLabel>
-              <Select {...register("main_caption")}>
-                <option value="refiner">Refiner</option>
-                <option value="transcribe">Transcribe</option>
-              </Select>
-            </FormControl>
-            <FormControl>
               <FormLabel>Intermission mode</FormLabel>
               <Checkbox {...register("intermission")} />
             </FormControl>
