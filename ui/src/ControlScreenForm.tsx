@@ -209,7 +209,7 @@ export const ControlScreenForm: React.FC<{
                     <Checkbox {...register("show_sessions")} />
                   </FormControl>
                   <FormControl>
-                    <FormLabel>Keynote-only (hide tracks B/C)</FormLabel>
+                    <FormLabel>Keynote-only (hide track lime)</FormLabel>
                     <Checkbox {...register("keynote_only")} />
                   </FormControl>
                   <FormControl>

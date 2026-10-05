@@ -53,8 +53,8 @@ export type HeartbeatDownlinkMessage = PubsubMessageHeader & {
 
 export type TrackSlug = string;
 
-const ALL_TRACKS: TrackSlug[] = ["a", "b", "c", "_hallway"];
-const TRACKS: TrackSlug[] = ["a", "b", "c"];
+const ALL_TRACKS: TrackSlug[] = ["_hallway"];
+const TRACKS: TrackSlug[] = ["magenta", "lime"];
 
 export type Config = {
   aws_region: string;

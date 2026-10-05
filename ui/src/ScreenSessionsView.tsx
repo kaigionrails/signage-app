@@ -126,7 +126,7 @@ function useRecentSessions(keynoteOnly: boolean = false) {
   if (!apictx) return undefined;
 
   const tracks = keynoteOnly
-    ? apictx.config.tracks.filter((t) => t === "a")
+    ? apictx.config.tracks.filter((t) => t === "magenta")
     : apictx.config.tracks;
 
   const retval = new Map(
