@@ -42,12 +42,17 @@ const NahaThemedLetterBox: React.FC<{
       direction="column"
       bgColor={letterBoxBgColor ?? ScreenColors.accent}
     >
+      {/* kor26: キービジュアルのピンク / ライムの横線を、帯と本文の境目に引く */}
       <Flex
         h="46vw"
         w="100%"
         justify="space-between"
         direction="row"
         bgColor={ScreenColors.bg}
+        borderTop={letterBoxBgColor ? undefined : "0.2vw solid"}
+        borderBottom={letterBoxBgColor ? undefined : "0.2vw solid"}
+        borderTopColor={ScreenColors.keyPink}
+        borderBottomColor={ScreenColors.keyGreen}
       >
         {children}
       </Flex>
@@ -112,14 +117,14 @@ export const IntermissionScreenInner: React.FC = () => {
         ) : null}
       </Flex>
       <>
-        {/* Bottom-left 'RubyKaigi 2026' logo */}
+        {/* Bottom-left hachiko (kor26)。下の帯 (51.125vw〜56.25vw) の縦中央に、上下約 0.8vw の隙間を空けて置く */}
         <Box
           display={screen.mode === "filler" ? "none" : "block"}
           position="absolute"
-          top="51.15vw"
+          top="51.94vw"
           left="2vw"
           w="auto"
-          h="5.1vw"
+          h="3.5vw"
           css={{
             "& svg": { height: "100%", width: "auto" },
             "& img": { height: "100%", width: "auto" },

@@ -1,8 +1,9 @@
 import React from "react";
 
-import { Center, VStack, Image, Box } from "@chakra-ui/react";
+import { Center, Box } from "@chakra-ui/react";
 import { LogoIcon } from "./LogoIcon";
 
+// キービジュアルにロゴが入っているので、上にロゴは重ねない
 export const ScreenHeroFiller: React.FC = () => {
   return (
     <Box
@@ -10,20 +11,12 @@ export const ScreenHeroFiller: React.FC = () => {
       h="100%"
       css={{
         "&": {
-          backgroundImage: `url(/bg.webp?p=rk26)`,
+          backgroundImage: `url(/kv.webp?p=kor26)`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          border: "solid white 2.7vh",
-          borderRadius: "4vh"
         },
-        "& svg": { height: "31vw", width: "auto" },
-        "& img": { height: "31vw", width: "auto" },
       }}
-    >
-      <Center w="100%" h="100%">
-        <Image src={`/herologo.svg?p=rk26`} />
-      </Center>
-    </Box>
+    />
   );
 };
 

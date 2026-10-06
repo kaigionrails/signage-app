@@ -17,7 +17,7 @@ export const Colors = {
 
   controlBg: "#f8f8f8",
   backgroundColor: "#f8f8f8",
-  bg: "#893D24", // 2026 color/primary brown
+  bg: "#000000", // kor26 --c-bg (管理画面のナビ背景)
   secondary: "#7C757D",
   secondaryText: "#767077",
 
@@ -127,16 +127,22 @@ export const theme = extendTheme({
 });
 
 const screenMain = "#000000"; // 2025 main
-const screenAccent = "#893D24" // 2026 color/primary brown
+const screenAccent = "#000000"; // kor26 --c-bg
 export const ScreenColors = {
   ...Colors,
   main: screenMain, // 2024
-  accent: screenAccent, // 2024
+  accent: screenAccent, // kor26: 上下の帯
   bg: "#ffffff", // 2024
+  // kor26 のキーカラー (公式サイトのピンク / グリーン)。magenta / lime トラックの色
+  keyPink: "oklch(66.80% 0.2507 355.46deg)",
+  keyGreen: "oklch(93.21% 0.2272 122.66deg)",
 };
+// kor26: 公式サイトのフォント (見出し / 本文) に合わせる
+const korDisplay = `"Funnel Display", "IBM Plex Sans JP", sans-serif`;
+const korBody = `"IBM Plex Sans JP", sans-serif`;
 export const ScreenFonts = {
   ...Fonts,
-  heading: "Outfit", // 2026
-  body: "Outfit", // 2026
-  timer: "Outfit", // 2026
+  heading: korDisplay,
+  body: korBody,
+  timer: korDisplay,
 };
