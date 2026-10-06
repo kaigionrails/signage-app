@@ -14,7 +14,7 @@ import {
 import { Center } from "@chakra-ui/react";
 
 import { Api, ConferenceSession, Speaker } from "./Api";
-import { Colors, Fonts, ScreenFonts } from "./theme";
+import { Colors, Fonts, ScreenFonts, TrackColors } from "./theme";
 import { Logo } from "./Logo";
 
 import { ScreenHeroFiller, ScreenHeroIconFiller } from "./ScreenHeroFiller";
@@ -151,7 +151,16 @@ const AnnounceUpcomingTopic: React.FC<{ session: ConferenceSession }> = ({
 
       <HStack alignItems="center" spacing="0.7vw" textAlign="left">
         <Box minW="14.5vw" textAlign="right">
-          <Text fontWeight="500" fontSize="1.8vw" lineHeight="2.3vw">
+          <Text
+            display="inline-block"
+            px="0.6vw"
+            py="0.3vw"
+            bgColor={TrackColors[session.track]?.bg}
+            color={TrackColors[session.track]?.fg}
+            fontWeight="700"
+            fontSize="1.8vw"
+            lineHeight="2.3vw"
+          >
             {session.hall}
           </Text>
           <Text fontWeight="500" fontSize="1.2vw" lineHeight="1.8vw">

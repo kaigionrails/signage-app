@@ -137,6 +137,11 @@ export const ScreenColors = {
   keyPink: "oklch(66.80% 0.2507 355.46deg)",
   keyGreen: "oklch(93.21% 0.2272 122.66deg)",
 };
+// kor26: hall 名の背景に敷く track の色
+export const TrackColors: Record<string, { bg: string; fg: string }> = {
+  magenta: { bg: ScreenColors.keyPink, fg: "#000000" },
+  lime: { bg: ScreenColors.keyGreen, fg: "#000000" },
+};
 // kor26: 公式サイトのフォント (見出し / 本文) に合わせる
 const korDisplay = `"Funnel Display", "IBM Plex Sans JP", sans-serif`;
 const korBody = `"IBM Plex Sans JP", sans-serif`;
