@@ -21,7 +21,14 @@ export const ScreenSponsorRotation: React.FC = () => {
   if (!page.items[0]) return <></>;
 
   return (
-    <Box w="41vw" h="100%" px="6vw" pt="4.6vw" bgColor="#ffffff">
+    // kor26: ruby はロゴを大きく出すため左右の余白を詰める
+    <Box
+      w="41vw"
+      h="100%"
+      px={page.plan === "ruby" ? "3.5vw" : "6vw"}
+      pt="4.6vw"
+      bgColor="#ffffff"
+    >
       <Center>
         <VStack spacing="2.8vw">
           <Text
@@ -43,7 +50,13 @@ export const ScreenSponsorRotation: React.FC = () => {
 const ScreenSponsorLogoSet: React.FC<{ page: RotationPage }> = ({ page }) => {
   if (page.plan === "ruby" && page.items[0]) {
     const sponsor = page.items[0];
-    return <Image w="100%" h="100%" src={sponsor.avatar_url} />;
+    // kor26: ロゴ画像は正方形で上下に白い余白が多い。欄の幅いっぱい (34vw) に広げ、
+    // 本文エリアに収まらない上下の余白は object-fit: cover で切る (絵は上下 20% より内側にある)
+    return (
+      <Box w="34vw" h="33vw">
+        <Image w="100%" h="100%" objectFit="cover" src={sponsor.avatar_url} />
+      </Box>
+    );
   } else if (page.plan === "platinum") {
     return (
       <Flex w="100%" h="100%" flexDirection="row" flexWrap="wrap">
