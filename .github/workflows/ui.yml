@@ -6,6 +6,7 @@ on:
 jobs:
   deploy:
     name: deploy
+    if: github.repository == 'ruby-no-kai/signage-app'
     runs-on: ubuntu-latest
     permissions:
       contents: read
