@@ -1,0 +1,44 @@
+on:
+  push:
+    branches:
+      - kaigionrails
+
+jobs:
+  deploy:
+    name: deploy
+    if: github.repository == 'kaigionrails/signage-app'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    environment:
+      name: prd
+      url: https://signage.kaigionrails.org
+    concurrency:
+      group: prd
+    steps:
+      - uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4.3.1
+        with:
+          aws-region: "ap-northeast-1"
+          role-skip-session-tagging: true
+          role-to-assume: "arn:aws:iam::861452569180:role/SignageAppDeployer"
+          mask-aws-account-id: 'false'
+
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: ruby/setup-ruby@14594264cd68ce8a2345dd349bc3d138a4ef85c8 # v1.327.0
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'ui/package-lock.json'
+      - run: npm ci
+        working-directory: './ui'
+      - run: npm run build
+        working-directory: './ui'
+        env:
+          VITE_REVISION: '${{ github.sha }}.gh${{ github.run_number }}'
+      - run: bundle exec ruby deploy.rb kor-signage-app-prd
+        working-directory: './ui'
