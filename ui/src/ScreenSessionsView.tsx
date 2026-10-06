@@ -211,7 +211,6 @@ const ScreenTopicSpeaker: React.FC<{ speaker: Speaker }> = ({ speaker }) => {
       spacing="1vw"
       fontWeight="500"
       fontSize="1.6vw"
-      h="20px"
       lineHeight="2vw"
       mt="1vw"
     >
