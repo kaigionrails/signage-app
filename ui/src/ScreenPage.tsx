@@ -42,21 +42,34 @@ const NahaThemedLetterBox: React.FC<{
       direction="column"
       bgColor={letterBoxBgColor ?? ScreenColors.accent}
     >
-      {/* kor26: キービジュアルのピンク / ライムの横線を、帯と本文の境目に引く */}
       <Flex
         h="46vw"
         w="100%"
         justify="space-between"
         direction="row"
         bgColor={ScreenColors.bg}
-        borderTop={letterBoxBgColor ? undefined : "0.2vw solid"}
-        borderBottom={letterBoxBgColor ? undefined : "0.2vw solid"}
-        borderTopColor={ScreenColors.keyPink}
-        borderBottomColor={ScreenColors.keyGreen}
       >
         {children}
       </Flex>
     </Flex>
+  );
+};
+
+// kor26: 公式サイトの diagonal stripe と同じ書き方の斜線 (高さ 1.23vw、全幅)
+const KorStripe: React.FC<{ hidden: boolean; top: string }> = ({
+  hidden,
+  top,
+}) => {
+  return (
+    <Box
+      display={hidden ? "none" : "block"}
+      position="absolute"
+      top={top}
+      left={0}
+      w="100%"
+      h="1.23vw"
+      bg={`repeating-linear-gradient(-45deg, ${ScreenColors.stripe} 0, ${ScreenColors.stripe} 0.833vw, transparent 0.833vw, transparent 1.667vw)`}
+    />
   );
 };
 
@@ -117,6 +130,9 @@ export const IntermissionScreenInner: React.FC = () => {
         ) : null}
       </Flex>
       <>
+        {/* kor26: 画面の下端の斜線。下の帯の底から hachiko の足の高さまで敷く。
+            filler ではキービジュアルに同じ斜線が入っているので出さない */}
+        <KorStripe hidden={screen.mode === "filler"} top="55.02vw" />
         {/* Bottom-left hachiko (kor26)。下の帯 (51.125vw〜56.25vw) の縦中央に、上下約 0.8vw の隙間を空けて置く */}
         <Box
           display={screen.mode === "filler" ? "none" : "block"}
