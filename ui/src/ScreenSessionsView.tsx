@@ -175,15 +175,19 @@ const AnnounceUpcomingTopic: React.FC<{ session: ConferenceSession }> = ({
             <SpeakerAvatar speakers={session.speakers} />
           ) : null}
         </Box>
-        <Box as="div">
+        <Box as="div" flex="1" minW={0}>
+          {/* kor26: 公式サイトのトークのタイトルと同じ 110% の平体。伸びるぶん、折り返し幅を先に 1.1 で割っておく */}
           <Heading
             as="h2"
-            minW="26vw"
+            minW="calc(26vw / 1.1)"
+            maxW="calc(100% / 1.1)"
             flexGrow={2}
             fontSize="2.1vw"
             lineHeight="2.5vw"
             fontWeight="700"
             fontFamily={ScreenFonts.body}
+            transform="scaleX(1.1)"
+            transformOrigin="left center"
           >
             {session.title}
           </Heading>
