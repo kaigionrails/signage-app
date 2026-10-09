@@ -102,10 +102,11 @@ export const ScreenSessionsView: React.FC<{ keynoteOnly?: boolean }> = ({
         position="absolute"
         textAlign="right"
         right="3vw"
-        top="52vw"
+        top="52.35vw"
         color={Colors.navText}
       >
-        {/* ^ position aligned with Bottom-left 'RubyKaigi 2024' logo */}
+        {/* ^ kor26: 大文字の高さの中央を、下の帯 (51.125vw〜56.25vw) の中央にそろえる。
+            IBM Plex Sans JP は ascent 1.06em / descent 0.44em と下に余白が多く、行の中で文字が上に寄るので、そのぶん下げてある */}
         {state === "in_session" ? <>Ongoing Sessions</> : null}
         {state === "break" ? <>Next sessions {relativeTime}</> : null}
         {state === "mixed" ? <>Current and Upcoming Sessions</> : null}
