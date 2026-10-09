@@ -7,6 +7,10 @@ import Api, { ScreenMode } from "./Api";
 import { useKioskContext } from "./KioskProvider";
 import { useApiContext } from "./ApiContext";
 import { TickProvider } from "./TickProvider";
+import {
+  BottomHachikoProvider,
+  useBottomHachikoHidden,
+} from "./BottomHachikoProvider";
 
 import { Colors, ScreenColors } from "./theme";
 
@@ -22,7 +26,9 @@ export const ScreenPage: React.FC = () => {
       <Box w="100vw" h="auto">
         <AspectRatio ratio={16 / 9}>
           <Box bgColor={ScreenColors.bg} bgSize="contain" w="100%" h="100%">
-            <IntermissionScreenInner />
+            <BottomHachikoProvider>
+              <IntermissionScreenInner />
+            </BottomHachikoProvider>
           </Box>
         </AspectRatio>
       </Box>
@@ -74,6 +80,7 @@ export const IntermissionScreenInner: React.FC = () => {
   const apictx = useApiContext(false);
   const kioskParams = useKioskContext();
   const { data: screen } = Api.useScreenControl(apictx, kioskParams.track);
+  const bottomHachikoHidden = useBottomHachikoHidden();
 
   if (!screen) return <p>Loading screen control</p>;
 
@@ -112,7 +119,9 @@ export const IntermissionScreenInner: React.FC = () => {
         ) : null}
       </Flex>
       <>
-        {/* Bottom-left (kor26)。下の帯 (51.125vw〜56.25vw) に、hachiko とその右のカタカナのロゴを上下中央で並べる */}
+        {/* Bottom-left (kor26)。下の帯 (51.125vw〜56.25vw) に、hachiko とその右のカタカナのロゴを上下中央で並べる。
+            大きいハチ公が出ているあいだ (セッション一覧の吹き出し、hero filler) は hachiko を隠す。
+            visibility で隠すので、カタカナのロゴの位置は変わらない */}
         <HStack
           display={screen.mode === "filler" ? "none" : "flex"}
           position="absolute"
@@ -123,6 +132,7 @@ export const IntermissionScreenInner: React.FC = () => {
           alignItems="center"
         >
           <Box
+            visibility={bottomHachikoHidden ? "hidden" : "visible"}
             w="auto"
             h="4.3vw"
             css={{

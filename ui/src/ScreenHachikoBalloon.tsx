@@ -3,6 +3,8 @@ import React from "react";
 import { Flex, Box } from "@chakra-ui/react";
 
 import { ScreenColors, ScreenFonts } from "./theme";
+import { Logo } from "./Logo";
+import { useHideBottomHachiko } from "./BottomHachikoProvider";
 
 // kor26: 下のハチ公がアナウンスしている黒い吹き出し。セッション一覧で使う。
 // 高さは中身によらず 37.6vw (本文エリアの上下を 4.2vw ずつ空ける)。
@@ -12,6 +14,8 @@ export const ScreenHachikoBalloon: React.FC<{
   status?: React.ReactNode;
   children: React.ReactNode;
 }> = ({ status, children }) => {
+  // しっぽの下に大きいハチ公を立たせるので、そのあいだ下帯の左下のハチ公は隠す
+  useHideBottomHachiko();
   return (
     <Flex w="100%" h="100%" direction="column" justify="center">
       <Flex
@@ -43,6 +47,17 @@ export const ScreenHachikoBalloon: React.FC<{
           bgColor={ScreenColors.balloonBg}
           clipPath="polygon(0 0, 100% 0, 100% 100%)"
         />
+        {/* しっぽの右 1.3vw に立つ大きいハチ公 (12.3vw - 1.3vw = 11vw)。吹き出しの下辺 (画面の 46.925vw) から
+            高さ 8.8vw なので、足は下帯の中、画面の下端から約 0.5vw 上に来る */}
+        <Box
+          position="absolute"
+          top="100%"
+          left="calc(100% - 11vw)"
+          h="8.8vw"
+          css={{ "& img": { height: "100%", width: "auto" } }}
+        >
+          <Logo />
+        </Box>
       </Flex>
     </Flex>
   );
