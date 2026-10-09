@@ -136,6 +136,8 @@ export const ScreenColors = {
   // kor26 のキーカラー (公式サイトのピンク / グリーン)。magenta / lime トラックの色
   keyPink: "oklch(66.80% 0.2507 355.46deg)",
   keyGreen: "oklch(93.21% 0.2272 122.66deg)",
+  // kor26: セッションの間とスポンサー欄の前の区切り線。公式サイトの --c-line (黒地に白 40%) を白地向けに薄いグレーにした
+  line: "oklch(0% 0 0 / 0.1)",
 };
 // kor26: hall 名の背景に敷く track の色
 export const TrackColors: Record<string, { bg: string; fg: string }> = {

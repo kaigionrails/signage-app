@@ -14,7 +14,7 @@ import {
 import { Center } from "@chakra-ui/react";
 
 import { Api, ConferenceSession, Speaker } from "./Api";
-import { Colors, Fonts, ScreenFonts, TrackColors } from "./theme";
+import { Colors, Fonts, ScreenColors, ScreenFonts, TrackColors } from "./theme";
 import { Logo } from "./Logo";
 
 import { ScreenHeroFiller, ScreenHeroIconFiller } from "./ScreenHeroFiller";
@@ -85,11 +85,12 @@ export const ScreenSessionsView: React.FC<{ keynoteOnly?: boolean }> = ({
   if (state === "end_of_day") return <ScreenHeroIconFiller />; // FIXME:
 
   return (
+    // kor26: セッションの間に区切り線を挟む。space-evenly にして、線がないときの space-around と同じ位置にセッションを置く
     <Flex
       w="100%"
       h="100%"
       direction="column"
-      justify="space-around"
+      justify="space-evenly"
       textAlign="center"
       fontFamily={ScreenFonts.body}
     >
@@ -110,9 +111,16 @@ export const ScreenSessionsView: React.FC<{ keynoteOnly?: boolean }> = ({
         {state === "mixed" ? <>Current and Upcoming Sessions</> : null}
       </Text>
 
-      {Array.from(recentSessions.entries()).map(([track, s]) =>
-        s ? <AnnounceUpcomingTopic key={track} session={s} /> : null
-      )}
+      {Array.from(recentSessions.entries())
+        .filter((e): e is [string, ConferenceSession] => e[1] !== undefined)
+        .map(([track, s], i) => (
+          <React.Fragment key={track}>
+            {i > 0 ? (
+              <Box h="0.1vw" mx="2vw" bgColor={ScreenColors.line} />
+            ) : null}
+            <AnnounceUpcomingTopic session={s} />
+          </React.Fragment>
+        ))}
     </Flex>
   );
 };
@@ -146,7 +154,8 @@ const AnnounceUpcomingTopic: React.FC<{ session: ConferenceSession }> = ({
   session,
 }) => {
   return (
-    <Box textAlign="left" fontFamily={ScreenFonts.body}>
+    // kor26: 右端をスポンサー欄の区切り線から 2vw 離す (セッションの間の横線の右端と同じ)
+    <Box textAlign="left" fontFamily={ScreenFonts.body} pr="2vw">
       {/* TODO: missing room name */}
 
       <HStack alignItems="center" spacing="0.7vw" textAlign="left">
