@@ -136,6 +136,8 @@ export const ScreenColors = {
   // kor26 のキーカラー (公式サイトのピンク / グリーン)。magenta / lime トラックの色
   keyPink: "oklch(66.80% 0.2507 355.46deg)",
   keyGreen: "oklch(93.21% 0.2272 122.66deg)",
+  // kor26: 画面の最下部の斜線の色。キーカラーのライムを半透明にして下帯に重ねる
+  stripe: "oklch(93.21% 0.2272 122.66deg / 0.7)",
   // kor26: セッション一覧の吹き出し (ハチ公のアナウンス)。公式サイトの --c-bg / --c-text / --c-text-muted と同じ
   balloonBg: "#000000",
   balloonText: "#ffffff",
