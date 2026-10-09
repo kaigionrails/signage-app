@@ -159,8 +159,16 @@ const AnnounceUpcomingTopic: React.FC<{ session: ConferenceSession }> = ({
     <Box textAlign="left" fontFamily={ScreenFonts.body} pr="2vw">
       {/* TODO: missing room name */}
 
-      <HStack alignItems="center" spacing="0.7vw" textAlign="left">
-        <Box minW="14.5vw" textAlign="right">
+      {/* kor26: avatar とタイトルは上端でそろえる。hall 名とハッシュタグは、これまでどおり avatar (7vw) の縦中央に置く */}
+      <HStack alignItems="flex-start" spacing="0.7vw" textAlign="left">
+        <Flex
+          minW="14.5vw"
+          minH="7vw"
+          direction="column"
+          justify="center"
+          align="flex-end"
+          textAlign="right"
+        >
           <Text
             display="inline-block"
             px="0.6vw"
@@ -179,16 +187,19 @@ const AnnounceUpcomingTopic: React.FC<{ session: ConferenceSession }> = ({
           <Text fontWeight="500" fontSize="1.2vw" lineHeight="1.8vw">
             #kaigionrails_{session.track}
           </Text>
-        </Box>
+        </Flex>
         <Box minW="7vw" w="7vw" mx="1vw">
           {session.speakers && session.speakers.length > 0 ? (
             <SpeakerAvatar speakers={session.speakers} />
           ) : null}
         </Box>
         <Box as="div" flex="1" minW={0}>
-          {/* kor26: 公式サイトのトークのタイトルと同じ 110% の平体。伸びるぶん、折り返し幅を先に 1.1 で割っておく */}
+          {/* kor26: 公式サイトのトークのタイトルと同じ 110% の平体。伸びるぶん、折り返し幅を先に 1.1 で割っておく。
+              行の上端から字面の上端まで、和文で約 0.08vw、英字の ascender で約 0.22vw 空くので、
+              その間をとって 0.15vw 持ち上げ、字面の上端を avatar の上端にそろえる */}
           <Heading
             as="h2"
+            mt="-0.15vw"
             minW="calc(26vw / 1.1)"
             maxW="calc(100% / 1.1)"
             flexGrow={2}
