@@ -7,68 +7,72 @@ import type { VenueAnnouncement } from "./Api";
 import { Logo } from "./Logo";
 import { QRCodeSVG } from "qrcode.react";
 import { ScreenFonts } from "./theme";
+import { ScreenHachikoBalloon } from "./ScreenHachikoBalloon";
 
 export const ScreenVenueAnnouncementView: React.FC<{
   ann: VenueAnnouncement;
 }> = ({ ann }) => {
   // XXX: dupe with ScreenAnnounceView Inner
+  // kor26: セッション一覧と同じく、下のハチ公が話している吹き出しに入れる
   return (
-    <Flex minW="45vw" w="100%" h="100%" direction="column">
-      <Flex
-        w="100%"
-        h="100%"
-        direction="column"
-        justify="space-between"
-        textAlign="left"
-      >
+    <ScreenHachikoBalloon>
+      <Flex minW="45vw" w="100%" h="100%" direction="column">
         <Flex
           w="100%"
-          flexGrow={1}
-          flexShrink={0}
-          flexBasis={0}
+          h="100%"
           direction="column"
-          justify="space-around"
-          fontFamily={ScreenFonts.body}
-          ml="1vw"
+          justify="space-between"
+          textAlign="left"
         >
-          <Text
-            fontWeight="500" // rk25
-            fontSize="3vw"
-            lineHeight="5vw"
+          <Flex
+            w="100%"
+            flexGrow={1}
+            flexShrink={0}
+            flexBasis={0}
+            direction="column"
+            justify="space-around"
+            fontFamily={ScreenFonts.body}
+            ml="1vw"
           >
-            {returnToBr(ann.content)}
-          </Text>
-        </Flex>
-        {ann.url ? (
-          <Flex h="16vw" direction="row">
-            <Box
-              css={{ "& svg": { height: "100%", width: "auto" } }}
-              bgColor="white"
+            <Text
+              fontWeight="500" // rk25
+              fontSize="3vw"
+              lineHeight="5vw"
             >
-              <QRCodeSVG
-                value={ann.url}
-                level={"M"}
-                includeMargin={true}
-                size={300}
-              />
-            </Box>
-            <Flex
-              textAlign="left"
-              h="100%"
-              direction="column"
-              justify="space-around"
-              ml="1vw"
-              fontSize="1.5vw"
-              lineHeight="2vw"
-              textDecoration="underline"
-              fontFamily={ScreenFonts.body}
-            >
-              <Text>{ann.url}</Text>
-            </Flex>
+              {returnToBr(ann.content)}
+            </Text>
           </Flex>
-        ) : null}
+          {ann.url ? (
+            <Flex h="16vw" direction="row">
+              <Box
+                css={{ "& svg": { height: "100%", width: "auto" } }}
+                bgColor="white"
+              >
+                <QRCodeSVG
+                  value={ann.url}
+                  level={"M"}
+                  includeMargin={true}
+                  size={300}
+                />
+              </Box>
+              <Flex
+                textAlign="left"
+                h="100%"
+                direction="column"
+                justify="space-around"
+                ml="1vw"
+                fontSize="1.5vw"
+                lineHeight="2vw"
+                textDecoration="underline"
+                fontFamily={ScreenFonts.body}
+              >
+                <Text>{ann.url}</Text>
+              </Flex>
+            </Flex>
+          ) : null}
+        </Flex>
       </Flex>
-    </Flex>
+    </ScreenHachikoBalloon>
   );
 };
 

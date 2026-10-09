@@ -6,7 +6,7 @@ import { ScreenColors, ScreenFonts } from "./theme";
 import { Logo } from "./Logo";
 import { useHideBottomHachiko } from "./BottomHachikoProvider";
 
-// kor26: 下のハチ公がアナウンスしている黒い吹き出し。セッション一覧と message で使う。
+// kor26: 下のハチ公がアナウンスしている黒い吹き出し。セッション一覧、message、会場アナウンスで使う。
 // 高さは中身によらず 37.6vw (本文エリアの上下を 4.2vw ずつ空ける)。
 // 左は左の余白に 2.7vw はみ出させて画面の 3vw から始め、右はスポンサー欄から 1.5vw 離す。
 // status を渡すと、下の段に置く
