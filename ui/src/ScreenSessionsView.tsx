@@ -276,21 +276,31 @@ const ScreenTopicSpeaker: React.FC<{ speaker: Speaker }> = ({ speaker }) => {
   const primaryIcon =
     (speaker.github_id && <GitHubIcon boxSize="1.55vw" m={0} />) ||
     (speaker.twitter_id && <TwitterIcon boxSize="1.55vw" m={0} />);
+  // kor26: 名前と ID がどちらも折り返せない長い 1 語だと、行がタイトルの列より広がり、
+  // 吹き出しとスポンサー欄を右に押し出す。入りきらないときは、アイコンと ID をひとまとまりで次の行に送る。
+  // それでも入らない長さは、途中で折る (overflowWrap)
   return (
     <HStack
       as="p"
       spacing="1vw"
+      rowGap={0}
+      wrap="wrap"
+      overflowWrap="anywhere"
       fontWeight="500"
       fontSize="1.6vw"
       lineHeight="2vw"
       mt="1vw"
     >
       <Text as="span">{speaker.name}</Text>
-      {primaryIcon ? primaryIcon : null}
-      {primaryAlias ? (
-        <Text as="span" m={0}>
-          @{primaryAlias}
-        </Text>
+      {primaryIcon || primaryAlias ? (
+        <HStack as="span" spacing="1vw">
+          {primaryIcon ? primaryIcon : null}
+          {primaryAlias ? (
+            <Text as="span" m={0}>
+              @{primaryAlias}
+            </Text>
+          ) : null}
+        </HStack>
       ) : null}
     </HStack>
   );
