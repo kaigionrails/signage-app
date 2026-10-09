@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 
-import { Flex, Box, HStack } from "@chakra-ui/react";
+import { Flex, Box, HStack, Image } from "@chakra-ui/react";
 import { AspectRatio } from "@chakra-ui/react";
 
 import Api, { ScreenMode } from "./Api";
@@ -112,21 +112,33 @@ export const IntermissionScreenInner: React.FC = () => {
         ) : null}
       </Flex>
       <>
-        {/* Bottom-left hachiko (kor26)。下の帯 (51.125vw〜56.25vw) の縦中央に、上下約 0.8vw の隙間を空けて置く */}
-        <Box
-          display={screen.mode === "filler" ? "none" : "block"}
+        {/* Bottom-left (kor26)。下の帯 (51.125vw〜56.25vw) に、hachiko とその右のカタカナのロゴを上下中央で並べる */}
+        <HStack
+          display={screen.mode === "filler" ? "none" : "flex"}
           position="absolute"
-          top="51.94vw"
+          top="51.125vw"
           left="2vw"
-          w="auto"
-          h="3.5vw"
-          css={{
-            "& svg": { height: "100%", width: "auto" },
-            "& img": { height: "100%", width: "auto" },
-          }}
+          h="5.125vw"
+          spacing="1vw"
+          alignItems="center"
         >
-          <Logo />
-        </Box>
+          <Box
+            w="auto"
+            h="4.3vw"
+            css={{
+              "& svg": { height: "100%", width: "auto" },
+              "& img": { height: "100%", width: "auto" },
+            }}
+          >
+            <Logo />
+          </Box>
+          <Image
+            src="/kaigionrails-katakana-lime.svg?p=kor26"
+            alt="カイギ・オン・レイルズ"
+            h="1.8vw"
+            w="auto"
+          />
+        </HStack>
       </>
     </>
   );
