@@ -140,10 +140,10 @@ export const IntermissionScreenInner: React.FC = () => {
       </Flex>
       <>
         {/* Bottom-left (kor26)。下の帯 (51.125vw〜56.25vw) に、hachiko とその右のカタカナのロゴを上下中央で並べる。
-            大きいハチ公が出ているあいだ (セッション一覧と message の吹き出し、hero filler) は hachiko を隠す。
-            visibility で隠すので、カタカナのロゴの位置は変わらない */}
+            吹き出しの下に大きいハチ公が立っているあいだは hachiko を隠す。
+            visibility で隠すので、カタカナのロゴの位置は変わらない。
+            filler ではキービジュアルの上に hachiko だけを出す (キービジュアルにロゴがあるので、カタカナのロゴは出さない) */}
         <HStack
-          display={screen.mode === "filler" ? "none" : "flex"}
           position="absolute"
           top="51.125vw"
           left="2vw"
@@ -163,6 +163,7 @@ export const IntermissionScreenInner: React.FC = () => {
             <Logo />
           </Box>
           <Image
+            display={screen.mode === "filler" ? "none" : "block"}
             src="/kaigionrails-katakana-lime.svg?p=kor26"
             alt="カイギ・オン・レイルズ"
             h="1.8vw"

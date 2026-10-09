@@ -7,8 +7,8 @@ import React, {
   useState,
 } from "react";
 
-// kor26: 下帯の左下のハチ公を隠す仕組み。大きいハチ公が出る部品 (セッション一覧の吹き出し、
-// hero filler) が useHideBottomHachiko() を呼ぶと、出ているあいだ左下のハチ公が隠れる。
+// kor26: 下帯の左下のハチ公を隠す仕組み。大きいハチ公が出る部品 (吹き出しの ScreenHachikoBalloon)
+// が useHideBottomHachiko() を呼ぶと、出ているあいだ左下のハチ公が隠れる。
 // 真偽値でなく数で持つのは、rotation の切り替えで出る側と消える側の effect の順番が
 // どうなっても崩れないようにするため
 type BottomHachikoContextData = {
