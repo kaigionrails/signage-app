@@ -161,7 +161,7 @@ export const IntermissionScreenInner: React.FC = () => {
       </Flex>
       <>
         {/* Bottom-left (kor26)。下の帯 (51.125vw〜56.25vw) の上下中央に hachiko を置く。
-            吹き出しの下に大きいハチ公が立っているあいだは隠す。filler ではキービジュアルの上に出す */}
+            大きいハチ公が出ているあいだ (吹き出しの下、hero filler の中央) は隠す。filler ではキービジュアルの上に出す */}
         <Flex
           position="absolute"
           top="51.125vw"
