@@ -87,6 +87,26 @@ export const IntermissionScreenInner: React.FC = () => {
   console.log("IntermissionScreenInner/screen", screen);
   return (
     <>
+      {/* kor26: 下帯 (51.125vw〜56.25vw) に、公式サイトの背景の交差点の模様を敷く。
+          画面全体に cover で敷いたときの下端が見えるようにする (画像は 16:9 より少し横長なので高さで合わせる)。
+          絶対配置の要素は DOM の順に重なるので、最初に置いて、大きいハチ公や左下のハチ公より下にする。
+          filler ではキービジュアルに重なるので出さない */}
+      <Box
+        display={screen.mode === "filler" ? "none" : "block"}
+        position="absolute"
+        top="51.125vw"
+        left={0}
+        w="100%"
+        h="5.125vw"
+        css={{
+          "&": {
+            backgroundImage: `url(/bg-crossing.webp?p=kor26)`,
+            backgroundSize: "auto 56.25vw",
+            backgroundPosition: "center bottom",
+            backgroundRepeat: "no-repeat",
+          },
+        }}
+      />
       <Flex h="100%" w="100%" direction="row" bgColor={ScreenColors.bg}>
         {screen.mode !== "filler" ? (
           <NahaThemedFillerPaddingX mode={screen.mode} />
