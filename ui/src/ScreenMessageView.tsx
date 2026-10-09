@@ -3,25 +3,29 @@ import React from "react";
 import { HStack, VStack, Flex, Box, Text } from "@chakra-ui/react";
 
 import { Api, ScreenControl, ScreenControlMessage } from "./Api";
-import { Colors, Fonts, ScreenFonts } from "./theme";
+import { Fonts, ScreenColors, ScreenFonts } from "./theme";
 import { Logo } from "./Logo";
+import { ScreenHachikoBalloon } from "./ScreenHachikoBalloon";
 
 export const ScreenMessageView: React.FC<{
   screen: ScreenControl;
 }> = ({ screen }) => {
   if (!screen?.message) throw "screen.message is mandatory";
+  // kor26: セッション一覧と同じく、下のハチ公が話している吹き出しに入れる
   return (
-    <Flex minW="45vw" w="100%" h="100%" direction="column">
-      <Box
-        w="100%"
-        flexGrow={1}
-        flexShrink={0}
-        flexBasis={0}
-        fontFamily={ScreenFonts.body}
-      >
-        {<AnnounceBasic message={screen.message} />}
-      </Box>
-    </Flex>
+    <ScreenHachikoBalloon>
+      <Flex minW="45vw" w="100%" h="100%" direction="column">
+        <Box
+          w="100%"
+          flexGrow={1}
+          flexShrink={0}
+          flexBasis={0}
+          fontFamily={ScreenFonts.body}
+        >
+          {<AnnounceBasic message={screen.message} />}
+        </Box>
+      </Flex>
+    </ScreenHachikoBalloon>
   );
 };
 
@@ -34,7 +38,7 @@ const AnnounceBasic: React.FC<{ message: ScreenControlMessage }> = ({
       h="100%"
       direction="column"
       justify="space-around"
-      color={Colors.textDefault}
+      color={ScreenColors.balloonText} // kor26: 吹き出しの黒地に白文字
       textAlign="left"
     >
       <Box>

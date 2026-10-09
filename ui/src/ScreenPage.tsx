@@ -140,7 +140,7 @@ export const IntermissionScreenInner: React.FC = () => {
       </Flex>
       <>
         {/* Bottom-left (kor26)。下の帯 (51.125vw〜56.25vw) に、hachiko とその右のカタカナのロゴを上下中央で並べる。
-            大きいハチ公が出ているあいだ (セッション一覧の吹き出し、hero filler) は hachiko を隠す。
+            大きいハチ公が出ているあいだ (セッション一覧と message の吹き出し、hero filler) は hachiko を隠す。
             visibility で隠すので、カタカナのロゴの位置は変わらない */}
         <HStack
           display={screen.mode === "filler" ? "none" : "flex"}
