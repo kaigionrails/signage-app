@@ -103,8 +103,11 @@ export const ScreenSessionsView: React.FC<{ keynoteOnly?: boolean }> = ({
         .filter((e): e is [string, ConferenceSession] => e[1] !== undefined)
         .map(([track, s], i) => (
           <React.Fragment key={track}>
+            {/* kor26: 吹き出しの中は space-evenly なので、タイトルが長い組では余白が 0 近くまで減り、
+                区切り線がセッションに接する。線の上下には、余白とは別に、タイトルと話者の間と同じ 1vw を必ず空ける。
+                それで入りきらない組では、吹き出しが上に伸びる */}
             {i > 0 ? (
-              <Box h="0.1vw" mx="2vw" bgColor={ScreenColors.line} />
+              <Box h="0.1vw" mx="2vw" my="1vw" bgColor={ScreenColors.line} />
             ) : null}
             <AnnounceUpcomingTopic session={s} />
           </React.Fragment>

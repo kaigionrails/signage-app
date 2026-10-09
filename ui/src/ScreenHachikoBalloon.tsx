@@ -7,7 +7,9 @@ import { Logo } from "./Logo";
 import { useHideBottomHachiko } from "./BottomHachikoProvider";
 
 // kor26: 下のハチ公がアナウンスしている黒い吹き出し。セッション一覧、message、会場アナウンスで使う。
-// 高さは中身によらず 37.6vw (本文エリアの上下を 4.2vw ずつ空ける)。
+// 高さは 37.6vw (本文エリアの上下を 4.2vw ずつ空ける)。中身が入りきらないときだけ、下端 (しっぽと大きいハチ公の位置) を
+// 保ったまま上に伸びる。h でなく flexBasis で高さを決めるのは、伸びたときも高さが definite のままで、
+// 中身の h="100%" (message、会場アナウンス) が効くようにするため。
 // 左は左の余白に 2.7vw はみ出させて画面の 3vw から始め、右はスポンサー欄から 1.5vw 離す。
 // status を渡すと、下の段に置く
 export const ScreenHachikoBalloon: React.FC<{
@@ -17,11 +19,12 @@ export const ScreenHachikoBalloon: React.FC<{
   // しっぽの下に大きいハチ公を立たせるので、そのあいだ下帯の左下のハチ公は隠す
   useHideBottomHachiko();
   return (
-    <Flex w="100%" h="100%" direction="column" justify="center">
+    <Flex w="100%" h="100%" direction="column" justify="flex-end" pb="4.2vw">
       <Flex
         position="relative"
         direction="column"
-        h="37.6vw"
+        flexBasis="37.6vw"
+        flexShrink={0}
         ml="-2.7vw"
         mr="1.5vw"
         px="2.5vw"
