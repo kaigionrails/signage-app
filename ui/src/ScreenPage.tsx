@@ -170,21 +170,22 @@ export const IntermissionScreenInner: React.FC = () => {
             w="auto"
           />
         </HStack>
-        {/* Top-left (kor26)。上の帯 (0〜5.125vw) に、Kaigi on Rails 2026 のロゴを上下中央で置く。
-            ロゴは「2026」が下の段にある形で、高さ 4.1vw にすると上の段の文字が約 3vw になる。
+        {/* Top-left (kor26)。上の帯 (0〜5.125vw) に、Kaigi on Rails 2026 の横ロゴを上下中央で置く。
+            ロゴ (viewBox 730×100) は大文字が高さの 21〜77% にあるので、箱を上下中央に置けば大文字も帯の中央に来る。
+            高さ 4.5vw で大文字は約 2.5vw。K の左端 (x = 17.15) が画面の 2.5vw に来るよう、左の余白のぶんずらす。
             filler ではキービジュアルにロゴが入っているので出さない */}
         <Flex
           display={screen.mode === "filler" ? "none" : "flex"}
           position="absolute"
           top={0}
-          left="2.5vw"
+          left="calc(2.5vw - 4.5vw * 17.15 / 100)"
           h="5.125vw"
           alignItems="center"
         >
           <Image
-            src="/kaigionrails-logo-white.svg?p=kor26"
+            src="/kaigionrails-logo-horizontal.svg?p=kor26"
             alt="Kaigi on Rails 2026"
-            h="4.1vw"
+            h="4.5vw"
             w="auto"
           />
         </Flex>
