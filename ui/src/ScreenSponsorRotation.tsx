@@ -4,7 +4,7 @@ import { VStack, Flex, Box, Image, Text } from "@chakra-ui/react";
 import { Center } from "@chakra-ui/react";
 
 import { Api, ConferenceSponsorship, ConferenceSponsorshipPlan } from "./Api";
-import { Fonts, ScreenColors, ScreenFonts } from "./theme";
+import { Fonts, ScreenFonts } from "./theme";
 import { useApiContext } from "./ApiContext";
 import { useTick } from "./TickProvider";
 
@@ -21,24 +21,13 @@ export const ScreenSponsorRotation: React.FC = () => {
   if (!page.items[0]) return <></>;
 
   return (
-    // kor26: ruby はロゴを大きく出すため左右の余白を詰める。
-    // 左端に、セッション欄との区切り線を上下 4.6vw ずつ空けて引く
+    // kor26: ruby はロゴを大きく出すため左右の余白を詰める
     <Box
-      position="relative"
       w="41vw"
       h="100%"
       px={page.plan === "ruby" ? "3.5vw" : "6vw"}
       pt="4.6vw"
       bgColor="#ffffff"
-      _before={{
-        content: '""',
-        position: "absolute",
-        left: 0,
-        top: "4.6vw",
-        bottom: "4.6vw",
-        w: "0.1vw",
-        bgColor: ScreenColors.line,
-      }}
     >
       <Center>
         <VStack spacing="2.8vw">

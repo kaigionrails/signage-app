@@ -14,10 +14,11 @@ import {
 import { Center } from "@chakra-ui/react";
 
 import { Api, ConferenceSession, Speaker } from "./Api";
-import { Colors, Fonts, ScreenColors, ScreenFonts, TrackColors } from "./theme";
+import { Fonts, ScreenColors, ScreenFonts, TrackColors } from "./theme";
 import { Logo } from "./Logo";
 
 import { ScreenHeroFiller, ScreenHeroIconFiller } from "./ScreenHeroFiller";
+import { ScreenHachikoBalloon } from "./ScreenHachikoBalloon";
 
 import { useRelativeTime } from "./ScreenAnnounceTime";
 import { useApiContext } from "./ApiContext";
@@ -85,33 +86,19 @@ export const ScreenSessionsView: React.FC<{ keynoteOnly?: boolean }> = ({
   if (state === "end_of_day") return <ScreenHeroIconFiller />; // FIXME:
 
   return (
-    // kor26: セッションの間に区切り線を挟む。space-evenly にして、線がないときの space-around と同じ位置にセッションを置く
-    <Flex
-      w="100%"
-      h="100%"
-      direction="column"
-      justify="space-evenly"
-      textAlign="center"
-      fontFamily={ScreenFonts.body}
+    <ScreenHachikoBalloon
+      status={
+        <ScreenSessionsStatus
+          text={
+            state === "in_session"
+              ? "Ongoing Sessions"
+              : state === "break"
+              ? `Next sessions ${relativeTime ?? ""}`
+              : "Current and Upcoming Sessions"
+          }
+        />
+      }
     >
-      {/*<VStack w="100%" spacing="1vw">*/}
-      <Text
-        fontWeight={600}
-        fontSize="2.3vw"
-        lineHeight="3vw"
-        position="absolute"
-        textAlign="right"
-        right="3vw"
-        top="52.35vw"
-        color={Colors.navText}
-      >
-        {/* ^ kor26: 大文字の高さの中央を、下の帯 (51.125vw〜56.25vw) の中央にそろえる。
-            IBM Plex Sans JP は ascent 1.06em / descent 0.44em と下に余白が多く、行の中で文字が上に寄るので、そのぶん下げてある */}
-        {state === "in_session" ? <>Ongoing Sessions</> : null}
-        {state === "break" ? <>Next sessions {relativeTime}</> : null}
-        {state === "mixed" ? <>Current and Upcoming Sessions</> : null}
-      </Text>
-
       {Array.from(recentSessions.entries())
         .filter((e): e is [string, ConferenceSession] => e[1] !== undefined)
         .map(([track, s], i) => (
@@ -122,7 +109,59 @@ export const ScreenSessionsView: React.FC<{ keynoteOnly?: boolean }> = ({
             <AnnounceUpcomingTopic session={s} />
           </React.Fragment>
         ))}
-    </Flex>
+    </ScreenHachikoBalloon>
+  );
+};
+
+// kor26: 吹き出しの下の段の状態の文。数字だけ大きくし、末尾に細い矢印を付ける
+const ScreenSessionsStatus: React.FC<{ text: string }> = ({ text }) => {
+  return (
+    <Text
+      fontFamily={ScreenFonts.heading}
+      fontWeight="700"
+      fontSize="2.3vw"
+      lineHeight="3.6vw"
+      color={ScreenColors.keyGreen}
+    >
+      {text
+        .trim()
+        .split(/(\d+)/)
+        .map((part, i) =>
+          /^\d+$/.test(part) ? (
+            <Text as="span" key={i} fontSize="3.2vw">
+              {part}
+            </Text>
+          ) : (
+            <React.Fragment key={i}>{part}</React.Fragment>
+          )
+        )}
+      <StatusArrow />
+    </Text>
+  );
+};
+
+// kor26: フォントの「→」は bold で太くなるので、細い線の SVG で描く (線の太さ 0.12vw)
+const StatusArrow: React.FC = () => {
+  return (
+    <Box
+      as="span"
+      display="inline-block"
+      ml="0.8vw"
+      w="2.4vw"
+      h="1vw"
+      verticalAlign="middle"
+    >
+      <svg
+        viewBox="0 0 24 10"
+        width="100%"
+        height="100%"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={1.2}
+      >
+        <path d="M0 5H23M18 0.6L23 5L18 9.4" />
+      </svg>
+    </Box>
   );
 };
 
@@ -155,17 +194,14 @@ const AnnounceUpcomingTopic: React.FC<{ session: ConferenceSession }> = ({
   session,
 }) => {
   return (
-    // kor26: 右端をスポンサー欄の区切り線から 2vw 離す (セッションの間の横線の右端と同じ)
-    <Box textAlign="left" fontFamily={ScreenFonts.body} pr="2vw">
+    <Box textAlign="left" fontFamily={ScreenFonts.body}>
       {/* TODO: missing room name */}
 
-      {/* kor26: avatar とタイトルは上端でそろえる。hall 名とハッシュタグは、これまでどおり avatar (7vw) の縦中央に置く */}
+      {/* kor26: hall 名の四角、avatar、タイトルの字面の上端をそろえる */}
       <HStack alignItems="flex-start" spacing="0.7vw" textAlign="left">
         <Flex
           minW="14.5vw"
-          minH="7vw"
           direction="column"
-          justify="center"
           align="flex-end"
           textAlign="right"
         >
@@ -181,10 +217,20 @@ const AnnounceUpcomingTopic: React.FC<{ session: ConferenceSession }> = ({
           >
             {session.hall}
           </Text>
-          <Text fontWeight="500" fontSize="1.2vw" lineHeight="1.8vw">
+          <Text
+            fontWeight="500"
+            fontSize="1.2vw"
+            lineHeight="1.8vw"
+            color={ScreenColors.balloonTextMuted}
+          >
             #kaigionrails
           </Text>
-          <Text fontWeight="500" fontSize="1.2vw" lineHeight="1.8vw">
+          <Text
+            fontWeight="500"
+            fontSize="1.2vw"
+            lineHeight="1.8vw"
+            color={ScreenColors.balloonTextMuted}
+          >
             #kaigionrails_{session.track}
           </Text>
         </Flex>
