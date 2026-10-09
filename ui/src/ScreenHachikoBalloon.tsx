@@ -7,7 +7,7 @@ import { Logo } from "./Logo";
 import { useHideBottomHachiko } from "./BottomHachikoProvider";
 
 // kor26: 下のハチ公がアナウンスしている黒い吹き出し。セッション一覧、message、会場アナウンスで使う。
-// 高さは 37.6vw (本文エリアの上下を 4.2vw ずつ空ける)。中身が入りきらないときだけ、下端 (しっぽと大きいハチ公の位置) を
+// 高さは 37.6vw (本文エリアの上を 3.8vw、下を 4.6vw 空ける)。中身が入りきらないときだけ、下端 (しっぽと大きいハチ公の位置) を
 // 保ったまま上に伸びる。h でなく flexBasis で高さを決めるのは、伸びたときも高さが definite のままで、
 // 中身の h="100%" (message、会場アナウンス) が効くようにするため。
 // 左は左の余白に 2.7vw はみ出させて画面の 3vw から始め、右はスポンサー欄から 1.5vw 離す。
@@ -19,7 +19,7 @@ export const ScreenHachikoBalloon: React.FC<{
   // しっぽの下に大きいハチ公を立たせるので、そのあいだ下帯の左下のハチ公は隠す
   useHideBottomHachiko();
   return (
-    <Flex w="100%" h="100%" direction="column" justify="flex-end" pb="4.2vw">
+    <Flex w="100%" h="100%" direction="column" justify="flex-end" pb="4.6vw">
       <Flex
         position="relative"
         direction="column"
@@ -50,11 +50,12 @@ export const ScreenHachikoBalloon: React.FC<{
           bgColor={ScreenColors.balloonBg}
           clipPath="polygon(0 0, 100% 0, 100% 100%)"
         />
-        {/* しっぽの右 1.3vw に立つ大きいハチ公 (12.3vw - 1.3vw = 11vw)。吹き出しの下辺 (画面の 46.925vw) から
-            高さ 8.8vw なので、足は下帯の中、画面の下端から約 0.5vw 上に来る */}
+        {/* しっぽの右 1.3vw に立つ大きいハチ公 (12.3vw - 1.3vw = 11vw)。耳の先が画像の上端にあるので、
+            吹き出しの下辺 (画面の 46.525vw) から 0.4vw 下げて、耳が吹き出しに触れないようにする。
+            上端は画面の 46.925vw で、高さ 8.8vw なので、足は下帯の中、画面の下端から約 0.5vw 上に来る */}
         <Box
           position="absolute"
-          top="100%"
+          top="calc(100% + 0.4vw)"
           left="calc(100% - 11vw)"
           h="8.8vw"
           css={{ "& img": { height: "100%", width: "auto" } }}
