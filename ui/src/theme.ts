@@ -142,6 +142,8 @@ export const ScreenColors = {
   balloonBg: "#000000",
   balloonText: "#ffffff",
   balloonTextMuted: "oklch(100% 0 0 / 0.7)",
+  // kor26: キャンセルになったトークのタイトルと話者。区切り線と同じ濃さまで落とす
+  balloonTextCanceled: "oklch(100% 0 0 / 0.4)",
   // kor26: 吹き出しの中の、セッションの間の区切り線。公式サイトの --c-line と同じ
   line: "oklch(100% 0 0 / 0.4)",
 };

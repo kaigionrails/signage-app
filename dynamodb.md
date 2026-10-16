@@ -45,6 +45,7 @@
     - name
     - slug
     - avatar_url
+- canceled: boolean
 - updated_at: number
 
 ## Sponsor

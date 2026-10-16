@@ -52,7 +52,8 @@ function useCurrentSession(track: TrackSlug): ConferenceSession | undefined {
 
   const trackSessions = conferenceSessions.tracks.get(track) ?? [];
   const session = trackSessions.find(
-    (s) => s.starts_at <= tick.unix() && tick.unix() <= s.ends_at
+    (s) =>
+      !s.canceled && s.starts_at <= tick.unix() && tick.unix() <= s.ends_at
   );
   return session;
 }

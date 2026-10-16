@@ -210,6 +210,7 @@ export type ConferenceSession = {
   ends_at: number;
   title: string;
   speakers: Speaker[] | null;
+  canceled: boolean;
   updated_at: number;
 };
 export type Speaker = {
@@ -248,6 +249,7 @@ function dynamodbConferenceSession(
             ]
           : []
       ) ?? [],
+    canceled: possibleItem.canceled?.BOOL ?? false,
     updated_at: Number(possibleItem?.updated_at?.N ?? 0),
   };
 }

@@ -6,6 +6,8 @@ require 'aws-sdk-dynamodb'
 # セッションを DynamoDB に同期する。keynote と talk だけを入れ、休憩や Sponsor LT などは入れない。
 #
 #   DRY_RUN=1 にすると AWS に触れず、作るアイテムを表示するだけにする。
+#   CANCELED=slug1,slug2 で、キャンセルになったトークに canceled: true を付ける。枠は空けたまま残し、サイネージに Canceled と出す。
+#   サイトのデータにはトークのキャンセルの印が無いので、同期し直すたびに毎回渡す (渡し忘れると普通のトークに戻る)
 
 # schedule.yml の track (1 / 2) と、UI の track slug / hall 名の対応。-1 (全幅) の枠は入れない
 TRACKS = {
@@ -26,6 +28,7 @@ SPEAKER_IMAGE_BASE_URL = 'https://kaigionrails.org/2026/images/speakers'
 schedule_yml, speakers_yml, table_name, tenant = ARGV[0,4]
 abort "Usage: #$0 schedule_yml speakers_yml table_name tenant" unless schedule_yml && speakers_yml && table_name && tenant
 dry_run = !ENV['DRY_RUN'].to_s.empty?
+canceled_slugs = ENV['CANCELED'].to_s.split(',').map(&:strip).reject(&:empty?)
 
 updated_at = Time.now.to_i
 touched_items = {}
@@ -58,6 +61,7 @@ sessions = %w(day_one day_two).flat_map { schedule.fetch(_1, []) }.filter_map do
     track: track.fetch(:track),
     hall: track.fetch(:hall),
     title: event.fetch('title'),
+    canceled: canceled_slugs.include?(event.fetch('id')),
     speakers: event.fetch('speakers', []).map do |id|
       speaker = speakers.fetch(id)
       {
@@ -71,6 +75,9 @@ sessions = %w(day_one day_two).flat_map { schedule.fetch(_1, []) }.filter_map do
     updated_at:,
   }
 end
+
+unknown_canceled_slugs = canceled_slugs - sessions.map { _1.fetch(:slug) }
+abort "CANCELED has unknown slugs: #{unknown_canceled_slugs.join(', ')}" unless unknown_canceled_slugs.empty?
 
 @dynamodb = Aws::DynamoDB::Client.new unless dry_run
 
@@ -94,7 +101,7 @@ end
 abort "sk collision: #{sessions.size} sessions but #{touched_items.size} keys" if touched_items.size != sessions.size
 
 if dry_run
-  puts "DRY_RUN: #{sessions.size} sessions (#{sessions.map { _1.fetch(:track) }.tally}); nothing was written"
+  puts "DRY_RUN: #{sessions.size} sessions (#{sessions.map { _1.fetch(:track) }.tally}), canceled: #{canceled_slugs.inspect}; nothing was written"
   exit
 end
 

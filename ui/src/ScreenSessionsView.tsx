@@ -237,18 +237,33 @@ const AnnounceUpcomingTopic: React.FC<{ session: ConferenceSession }> = ({
             #kaigionrails_{session.track}
           </Text>
         </Flex>
-        <Box minW="7vw" w="7vw" mx="1vw">
+        <Box
+          minW="7vw"
+          w="7vw"
+          mx="1vw"
+          opacity={session.canceled ? 0.5 : undefined}
+        >
           {session.speakers && session.speakers.length > 0 ? (
             <SpeakerAvatar speakers={session.speakers} />
           ) : null}
         </Box>
-        <Box as="div" flex="1" minW={0}>
+        {/* kor26: キャンセルになったトークは、枠を空けたまま残す。Canceled の印を avatar の上端にそろえて置き、
+            タイトルと話者は薄くする */}
+        <Box
+          as="div"
+          flex="1"
+          minW={0}
+          color={
+            session.canceled ? ScreenColors.balloonTextCanceled : undefined
+          }
+        >
+          {session.canceled ? <CanceledLabel /> : null}
           {/* kor26: 公式サイトのトークのタイトルと同じ 110% の平体。伸びるぶん、折り返し幅を先に 1.1 で割っておく。
               行の上端から字面の上端まで、和文で約 0.08vw、英字の ascender で約 0.22vw 空くので、
               その間をとって 0.15vw 持ち上げ、字面の上端を avatar の上端にそろえる */}
           <Heading
             as="h2"
-            mt="-0.15vw"
+            mt={session.canceled ? "1vw" : "-0.15vw"}
             minW="calc(26vw / 1.1)"
             maxW="calc(100% / 1.1)"
             flexGrow={2}
@@ -271,6 +286,25 @@ const AnnounceUpcomingTopic: React.FC<{ session: ConferenceSession }> = ({
         </Box>
       </HStack>
     </Box>
+  );
+};
+
+// kor26: 公式サイトの keynote の Canceled ラベルと同じ、ピンク地に白文字。hall 名の四角と同じ大きさにする
+const CanceledLabel: React.FC = () => {
+  return (
+    <Text
+      display="inline-block"
+      px="0.6vw"
+      py="0.3vw"
+      bgColor={ScreenColors.keyPink}
+      color={ScreenColors.balloonText}
+      fontFamily={ScreenFonts.heading}
+      fontWeight="700"
+      fontSize="1.8vw"
+      lineHeight="2.3vw"
+    >
+      Canceled
+    </Text>
   );
 };
 
